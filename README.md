@@ -7,12 +7,39 @@
 * Ctrl+Alt+9 : 방송시작
 * Ctrl+Alt+0 : 방송중단
 
-TouchOSC의 버튼 컨트롤의 주소와 값을 위의 단축키로 아래의 코드를 사용해 변환하고 있습니다.
+TouchOSC의 버튼 컨트롤의 주소와 값을 위의 단축키로 매핑하기위해 `shortcuts.json`을
+아래와 같이 정의해 사용:
 
-    keymap = map[oscVal]keyComb{
-        oscVal{"/1/toggle1", 0}:        keyComb{keybd_event.VK_0, true, true, false}, // 방송중단
-        oscVal{"/1/toggle1", 1}:        keyComb{keybd_event.VK_9, true, true, false}, // 방송시작
-    }
+    [
+        {
+            "oscVal": {
+                "addr": "/1/multipush2/1/1",
+                "val": 4
+            },
+            "keyComb": {
+                "description": "sceen 1",
+                "key": "1",
+                "ctrl": true,
+                "alt": true,
+                "shift": false
+            }
+        },
+        {
+            "oscVal": {
+                "addr": "/1/multipush2/2/1",
+                "val": 4
+            },
+            "keyComb": {
+                "description": "sceen 2",
+                "key": "2",
+                "ctrl": true,
+                "alt": true,
+                "shift": false
+            }
+        },
+        ...
+    ]
+
 
 ## reference
 
