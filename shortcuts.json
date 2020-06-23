@@ -1,0 +1,80 @@
+[
+    {
+        "oscVal": {
+            "addr": "/1/multipush2/1/1",
+            "val": 4
+        },
+        "keyComb": {
+            "description": "sceen 1",
+            "key": "1",
+            "ctrl": true,
+            "alt": true,
+            "shift": false
+        }
+    },
+    {
+        "oscVal": {
+            "addr": "/1/multipush2/2/1",
+            "val": 4
+        },
+        "keyComb": {
+            "description": "sceen 2",
+            "key": "2",
+            "ctrl": true,
+            "alt": true,
+            "shift": false
+        }
+    },
+    {
+        "oscVal": {
+            "addr": "/1/toggle1",
+            "val": 1
+        },
+        "keyComb": {
+            "description": "streaming on",
+            "key": "9",
+            "ctrl": true,
+            "alt": true,
+            "shift": false
+        }
+    },
+    {
+        "oscVal": {
+            "addr": "/1/toggle1",
+            "val": 0
+        },
+        "keyComb": {
+            "description": "streaming off",
+            "key": "0",
+            "ctrl": true,
+            "alt": true,
+            "shift": false
+        }
+    },
+    {
+        "oscVal": {
+            "addr": "/1/toggle2",
+            "val": 1
+        },
+        "keyComb": {
+            "description": "recording on",
+            "key": "7",
+            "ctrl": true,
+            "alt": true,
+            "shift": false
+        }
+    },
+    {
+        "oscVal": {
+            "addr": "/1/toggle2",
+            "val": 0
+        },
+        "keyComb": {
+            "description": "recording off",
+            "key": "8",
+            "ctrl": true,
+            "alt": true,
+            "shift": false
+        }
+    }
+]

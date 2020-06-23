@@ -5,39 +5,66 @@
 package main
 
 import (
+	"encoding/json"
+	"log"
+	"os"
+
 	"github.com/hypebeast/go-osc/osc"
 	"github.com/micmonay/keybd_event"
 )
 
 type oscVal struct {
-	addr string
-	val  float32
+	Addr string  `json: "addr"`
+	Val  float32 `json: "val"`
 }
 
 type keyComb struct {
-	key   int
-	ctrl  bool
-	alt   bool
-	shift bool
+	Description string `jsono: description`
+	Key         string `json: "key"`
+	Ctrl        bool   `json: "ctrl"`
+	Alt         bool   `json: "alt"`
+	Shift       bool   `json: "shift"`
+}
+
+type keyShortcuts []struct {
+	OSCVal  oscVal  `json: oscVal`
+	KeyComb keyComb `json: keyComb`
 }
 
 var (
-	keymap = map[oscVal]keyComb{
-		oscVal{"/1/toggle1", 0}:        keyComb{keybd_event.VK_0, true, true, false}, // 방송중단
-		oscVal{"/1/toggle1", 1}:        keyComb{keybd_event.VK_9, true, true, false}, // 방송시작
-		oscVal{"/1/toggle2", 0}:        keyComb{keybd_event.VK_8, true, true, false}, // 녹화중단
-		oscVal{"/1/toggle2", 1}:        keyComb{keybd_event.VK_7, true, true, false}, // 녹화시작
-		oscVal{"/1/multipush2/1/1", 4}: keyComb{keybd_event.VK_1, true, true, false}, // 화면 1
-		oscVal{"/1/multipush2/2/1", 4}: keyComb{keybd_event.VK_2, true, true, false}, // 화면 2
-		oscVal{"/1/multipush2/3/1", 4}: keyComb{keybd_event.VK_1, true, true, false}, // 화면 3
-		oscVal{"/1/multipush2/4/1", 4}: keyComb{keybd_event.VK_2, true, true, false}, // 화면 4
+	shortcuts   *keyShortcuts
+	shortcutMap = make(map[oscVal]keyComb)
+
+	keymap = map[string]int{
+		"0": keybd_event.VK_0,
+		"1": keybd_event.VK_1,
+		"2": keybd_event.VK_2,
+		"3": keybd_event.VK_3,
+		"4": keybd_event.VK_4,
+		"5": keybd_event.VK_5,
+		"6": keybd_event.VK_6,
+		"7": keybd_event.VK_7,
+		"8": keybd_event.VK_8,
+		"9": keybd_event.VK_9,
 	}
 )
 
+func init() {
+	var err error
+	shortcuts, err = loadKeyShortcuts("shortcuts.json")
+	chk(err)
+	for _, s := range *shortcuts {
+		shortcutMap[s.OSCVal] = s.KeyComb
+	}
+}
+
 func pressKeyComb(k keyComb) {
-	kb.SetKeys(k.key)
-	kb.HasCTRL(k.ctrl)
-	kb.HasALT(k.alt)
+	log.Println(k.Description)
+
+	kb.SetKeys(keymap[k.Key])
+	kb.HasCTRL(k.Ctrl)
+	kb.HasALT(k.Alt)
+	kb.HasSHIFT(k.Shift)
 
 	err := kb.Launching()
 	chk(err)
@@ -45,11 +72,28 @@ func pressKeyComb(k keyComb) {
 
 func handlingOSCEvt(oscMsg *osc.Message) {
 	oscV := oscVal{
-		addr: oscMsg.Address,
-		val:  oscMsg.Arguments[0].(float32),
+		Addr: oscMsg.Address,
+		Val:  oscMsg.Arguments[0].(float32),
 	}
 
-	if kc, ok := keymap[oscV]; ok {
+	if kc, ok := shortcutMap[oscV]; ok {
+		log.Println()
 		pressKeyComb(kc)
 	}
+}
+
+func loadKeyShortcuts(fn string) (*keyShortcuts, error) {
+	f, err := os.Open(fn)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	var ret keyShortcuts
+	err = json.NewDecoder(f).Decode(&ret)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ret, nil
 }
