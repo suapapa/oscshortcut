@@ -1,8 +1,8 @@
 [
     {
         "oscVal": {
-            "addr": "/1/multipush2/1/1",
-            "val": 4
+            "addr": "/1/multipush_scene/1/1",
+            "val": 1
         },
         "keyComb": {
             "description": "sceen 1",
@@ -12,8 +12,8 @@
     },
     {
         "oscVal": {
-            "addr": "/1/multipush2/2/1",
-            "val": 4
+            "addr": "/1/multipush_scene/2/1",
+            "val": 1
         },
         "keyComb": {
             "description": "sceen 2",
@@ -23,54 +23,57 @@
     },
     {
         "oscVal": {
-            "addr": "/1/toggle1",
+            "addr": "/1/multipush_scene/3/1",
+            "val": 1
+        },
+        "keyComb": {
+            "description": "sceen 3",
+            "key": "F3",
+            "ctrl": true
+        }
+    },
+    {
+        "oscVal": {
+            "addr": "/1/toggle_streaming",
             "val": 1
         },
         "keyComb": {
             "description": "streaming on",
-            "key": "9",
-            "ctrl": true,
-            "alt": true,
-            "shift": false
+            "key": "F9",
+            "ctrl": true
         }
     },
     {
         "oscVal": {
-            "addr": "/1/toggle1",
+            "addr": "/1/toggle_streaming",
             "val": 0
         },
         "keyComb": {
             "description": "streaming off",
-            "key": "0",
-            "ctrl": true,
-            "alt": true,
-            "shift": false
+            "key": "F10",
+            "ctrl": true
         }
     },
     {
         "oscVal": {
-            "addr": "/1/toggle2",
+            "addr": "/1/toggle_recording",
             "val": 1
         },
         "keyComb": {
             "description": "recording on",
-            "key": "7",
-            "ctrl": true,
-            "alt": true,
-            "shift": false
+            "key": "F11",
+            "ctrl": true
         }
     },
     {
         "oscVal": {
-            "addr": "/1/toggle2",
+            "addr": "/1/toggle_recording",
             "val": 0
         },
         "keyComb": {
             "description": "recording off",
-            "key": "8",
-            "ctrl": true,
-            "alt": true,
-            "shift": false
+            "key": "F12",
+            "ctrl": true
         }
     }
 ]
